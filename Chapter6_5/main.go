@@ -49,7 +49,8 @@ func main() {
 		go func(jj int) {
 
 			defer waitGroup.Done()
-			set(rand.Intn(27 * j))
+			set(rand.Intn(27*jj + 12))
+			//fmt.Printf("The current value j : %d, %d\n", get(), jj)
 		}(j)
 	}
 
