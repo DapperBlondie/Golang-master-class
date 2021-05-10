@@ -8,6 +8,7 @@ import (
 
 var readValue = make(chan int)
 var writeValue = make(chan int)
+var value int = 200
 
 func set(newValue int) {
 
@@ -21,8 +22,6 @@ func get() int {
 }
 
 func monitor() {
-
-	var value int = 200
 
 	for {
 
@@ -49,7 +48,7 @@ func main() {
 		go func(jj int) {
 
 			defer waitGroup.Done()
-			set(rand.Intn(27*jj + 12))
+			set(rand.Intn(27*jj + 150))
 			//fmt.Printf("The current value j : %d, %d\n", get(), jj)
 		}(j)
 	}
