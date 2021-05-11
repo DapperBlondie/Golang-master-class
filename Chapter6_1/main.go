@@ -4,21 +4,31 @@ import (
 	"fmt"
 )
 
-func main()  {
+func main() {
 
 	channel := make(chan int, 5)
 
-	for j := 0;j<10;j++ {
+	for j := 0; j < 10; j++ {
 
 		select {
 		case channel <- j:
-		default:
 
-			fmt.Println("Have not enough space !", j)
+		default:
+			fmt.Println("We can not accept another value, ", j)
 		}
 	}
 
-	for  {
+	for j := 0; j < 10; j++ {
+
+		select {
+		case channel <- j:
+
+		default:
+			fmt.Println("We can not accept another value, ", j)
+		}
+	}
+
+	for {
 		select {
 		case num := <-channel:
 
