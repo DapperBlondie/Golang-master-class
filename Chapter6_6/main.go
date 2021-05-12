@@ -10,6 +10,7 @@ type Client struct {
 	id      int
 	integer int
 }
+
 type Data struct {
 	job    Client
 	square int
@@ -63,21 +64,25 @@ func create(n int) {
 func main() {
 
 	var (
-		nJobs    = 15
+		nJobs    = 40
 		nWorkers = 5
 	)
 
 	go create(nJobs)
 	finished := make(chan interface{})
+
 	go func() {
+
 		for d := range data {
+
 			fmt.Printf("Client ID: %d\tint: ", d.job.id)
-			fmt.Printf("%dtsquare: %d\n", d.job.integer, d.square)
+			fmt.Printf("%d\tsquare: %d\n", d.job.integer, d.square)
 		}
+
 		finished <- true
 	}()
+
 	makeWP(nWorkers)
 	fmt.Printf(": %v\n", <-finished)
-
 	return
 }
