@@ -14,7 +14,7 @@ func main() {
 		for j := 0; j < 10; j++ {
 
 			select {
-			case channel <- j:
+			case channel <- j: // this is a blocking call
 				//default:
 				//fmt.Println("We can not accept another value, ", j)
 			}
@@ -28,7 +28,8 @@ func main() {
 		for j := 0; j < 10; j++ {
 
 			select {
-			case channel <- j:
+			case channel <- j: // this is a blocking call, because it is possible our buffered channel be full
+				// and we need to exhaust it !
 				//default:
 				//fmt.Println("We can not accept another value, ", j)
 			}
