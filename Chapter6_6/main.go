@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 )
@@ -20,7 +22,22 @@ var (
 	size    = 10
 	clients = make(chan Client, size)
 	data    = make(chan Data, size)
+	mutex   sync.Mutex
 )
+
+func saveToFile(data Data) {
+
+	file, _ := os.Create("text.txt")
+	writer := bufio.NewWriter(file)
+
+	strData := string(rune(data.square)) + ", "
+	strData += string(rune(data.job.id)) + ", " + string(rune(data.job.integer))
+	n, err := writer.WriteString(strData)
+	if err != nil {
+
+		fmt.Println("Number of chars written : ", n)
+	}
+}
 
 func worker(w *sync.WaitGroup) {
 
@@ -29,6 +46,9 @@ func worker(w *sync.WaitGroup) {
 		square := c.integer * c.integer
 		output := Data{c, square}
 		data <- output
+		mutex.Lock()
+		saveToFile(output)
+		mutex.Unlock()
 		time.Sleep(time.Millisecond)
 	}
 
