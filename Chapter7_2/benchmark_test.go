@@ -35,5 +35,4 @@ func BenchmarkFibo3(b *testing.B) {
 	}
 
 	RESULT = r
-	//Output:131342
 }
