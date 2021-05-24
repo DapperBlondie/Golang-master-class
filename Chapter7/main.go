@@ -34,6 +34,7 @@ func fibo2(n int) int {
 		}
 		fn[i] = f
 	}
+
 	time.Sleep(50 * time.Millisecond)
 	return fn[n]
 }
